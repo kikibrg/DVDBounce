@@ -12,7 +12,9 @@ set(CMAKE_PREFIX_PATH /ucrt64 /mingw64)
 
 find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
-add_executable(DVDBounce src/main.cpp)
+set (SOURCE_FILES src/main.cpp src/DVDBouncer.cpp)
+
+add_executable(DVDBounce ${SOURCE_FILES})
 
 target_link_libraries(DVDBounce PRIVATE sfml-graphics sfml-window sfml-system)
 
