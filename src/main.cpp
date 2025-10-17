@@ -1,23 +1,32 @@
-#include <iostream>
 #include <SFML/Graphics.hpp>
-
-using namespace std;
-using namespace sf;
+#include <iostream>
+#include <math.h>
+#include <ctime>
+#include "DVDBouncer.hpp"
 
 int main()
 {
-    RenderWindow window(VideoMode(1080, 720), "DVD");
+    srand(time(0));
+    sf::RenderWindow window(sf::VideoMode(1080, 720), "DVD");
+    window.setFramerateLimit(60);
+
+    DVDBouncer DvD;
     
-    while(window.isOpen() && !Keyboard::isKeyPressed(Keyboard::Escape))
+    while(window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
-        Event event;
+        sf::Event event;
         while(window.pollEvent(event))
         {
-            if(event.type == Event::Closed)
+            if(event.type == sf::Event::Closed)
                 window.close();
         }
 
+        DvD.moveSprite();
+        DvD.checkBoundaries(sf::Vector2i(window.getSize().x, window.getSize().y));
+        DvD.display();
+
         window.clear();
+        window.draw(DvD.draw());
         window.display();
     }
     return 0;
